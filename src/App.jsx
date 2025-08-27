@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [quote, setQuote] = useState("");
+  const [author, setAuthor] = useState("");
 
+  const fetchQuote = async () => {
+    try {
+      const response = await fetch("https://dummyjson.com/quotes/random");
+      const data = await response.json();
+      console.log("API response:", data); // check in console
+      setQuote(data.quote);
+      setAuthor(data.author);
+    } catch (error) {
+      console.error("Error fetching quote:", error);
+    }
+  };
+  
+  
+  
+
+  useEffect(() => {
+    fetchQuote(); // fetch once when app loads
+  }, []);
+
+  // This is the "render" equivalent:
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-4">
+      <div className="bg-white rounded-2xl shadow-md p-6 max-w-md text-center">
+        <p className="text-xl italic mb-4">"{quote}"</p>
+        <h3 className="text-lg font-semibold">— {author}</h3>
+        <button
+          onClick={fetchQuote}
+          className="mt-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
+          New Quote
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
