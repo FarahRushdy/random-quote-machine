@@ -23,18 +23,28 @@ function App() {
     fetchQuote(); // fetch once when app loads
   }, []);
 
-  // This is the "render" equivalent:
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-4">
-      <div className="bg-white rounded-2xl shadow-md p-6 max-w-md text-center">
-        <p className="text-xl italic mb-4">"{quote}"</p>
-        <h3 className="text-lg font-semibold">— {author}</h3>
-        <button
+    <div className="flex items-center justify-center h-screen bg-gray-100 ">
+      <div id="quote-box" className="bg-white rounded-2xl shadow-md text-center">
+        <p id="text" className="text-xl italic mb-4">"{quote}"</p>
+        <h3 id="author" className="text-lg font-semibold">— {author}</h3>
+        <button id="new-quote"
           onClick={fetchQuote}
           className="mt-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
         >
           New Quote
         </button>
+        <a
+          href={`https://twitter.com/intent/tweet?text="${quote}"%20--%20${author}`}
+          id="tweet-quote"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
+          Tweet Quote
+        </a>
+          
       </div>
     </div>
   );
